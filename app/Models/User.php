@@ -43,24 +43,24 @@ class User extends Authenticatable
     ];
 
     
-    public function hasPermission( $permission ){
-        $adminRoles = [
-            'viewAny','view','create','update','delete'
-        ];
-        $userRoles = [
-            'view'
-        ];
-        if( $this->admin == 1 ){
-            $roles = $adminRoles;
-            // return true;
-        }else{
-            $roles = $userRoles;
-            // return false;
-        }
-        if( in_array($permission,$roles) ){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    // public function hasPermission( $permission ){
+    //     $adminRoles = [
+    //         'viewAny','view','create','update','delete'
+    //     ];
+    //     $userRoles = [
+    //         'view'
+    //     ];
+    //     if( $this->admin == 1 ){
+    //         $roles = $adminRoles;
+    //         // return true;
+    //     }else{
+    //         $roles = $userRoles;
+    //         // return false;
+    //     }
+    //     if( in_array($permission,$roles) ){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
 }

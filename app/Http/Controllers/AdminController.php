@@ -10,10 +10,9 @@ class AdminController extends Controller
     //trang chủ
     public function profile(){
         if (Auth::check()) {
-            // dd(Auth::check());
             return view('admin.includes.content');
         } else{
-            return view('admin.login');
+            return view('admin.register');
         }
     }
    
@@ -28,23 +27,27 @@ class AdminController extends Controller
         $user->password = bcrypt($request->password);
         if( $request->passwordagain == $request->password ){
             $user->save();
-            return view('admin.login');
+            return redirect()->route('formlogin')->with('status','Đăng Kí thành công');
         }else{
-            // alert('vui lòng xác nhận mật khẩu');
             return redirect()->route('profile');
         }
     }
 
-
      //đăng nhập
-    public function formlogin( ){
-        return view('admin.login');
+    public function formlogin(){
+        if (Auth::check()) {
+        return view('admin.includes.content');
+        } else{
+            return view('admin.login');
+        }
     }
     public function login(Request $request){
+        // dd(Auth::attempt(['email' => $request->email,'password' => $request->password]));
         if(Auth::attempt(['email' => $request->email,'password' => $request->password])){
             // return 123;
             return redirect()->route('profile');
         }else{
+            dd(123);
             return view('admin.login');
         }
     }
@@ -59,7 +62,7 @@ class AdminController extends Controller
     public function setting(){
         return view(' admin.updatesetting ');
     }
-    
+
     // cập nhật tài khoản
     public function settied(Request $request){
         $users = User::find(auth()->id());

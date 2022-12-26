@@ -35,7 +35,7 @@
 
   <main>
     <div class="container">
-
+      
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
@@ -47,11 +47,17 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                  </div>
+                  </div>  
 
-                  <form class="row g-3 needs-validation" method="post" action="{{ route('admin.login') }}">
-                    @csrf
-                    <div class="col-12">
+                  @if (session('status'))
+                  <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                  </div>
+                  @endif
+                  
+                    <form class="row g-3 needs-validation" method="post" action="{{ route('admin.login') }}">
+                      @csrf
+                      <div class="col-12">
                       <label  class="form-label">Email</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" >@</span>

@@ -49,15 +49,15 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                                        <h5 class="card-title text-center pb-0 fs-4">Vui lòng nhập email</h5>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" method="post" action="{{ route('shop.login') }}">
+                                    <form class="row g-3 needs-validation" method="post" action="{{ route('show.postforgetpass') }}">
                                         @csrf
-                                        @if (session('status'))
-                                            <div class="alert alert-success" role="alert">
-                                                {{ session('status') }}
-                                            </div>
+                                        @if( session('error') )
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{ session('error') }}
+                                                </div>
                                         @endif
                                         <div class="col-12">
                                             <label class="form-label">Email</label>
@@ -66,23 +66,8 @@
                                                 <input type="text" name="email" class="form-control">
                                             </div>
                                         </div>
-
                                         <div class="col-12">
-                                            <label class="form-label">Password</label>
-                                            <input type="password" name="password" class="form-control">
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="form-check">
-                                                <a href="{{ route('show.forgetpass') }}">Quên Mật Khẩu</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Login</button>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="small mb-0">Don't have account? <a
-                                                    href="{{ route('formregistershop') }}">Create an account</a></p>
+                                            <button class="btn btn-primary w-100" type="submit">Submit</button>
                                         </div>
                                     </form>
 

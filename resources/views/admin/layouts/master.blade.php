@@ -51,7 +51,7 @@
   <main id="main" class="main">
 
     @yield('content')
-
+    
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -68,8 +68,39 @@
   <script src="{{asset('admin/assets/vendor/quill/quill.min.js')}}"></script>
   <script src="{{asset('admin/assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
   <script src="{{asset('admin/assets/vendor/tinymce/tinymce.min.js')}}"></script>
-  <script src="{{asset('admin/assets/vendor/php-email-form/validate.js"></script>
+  <script src="{{asset('admin/assets/vendor/php-email-form/validate.js')}}"></script>
   <!-- Template Main JS File -->
-  <script src="{{asset('admin/assets/js/main.js"></script>
+  <script src="{{asset('admin/assets/js/main.js')}}"></script>
+{{-- 
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js'></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.10.25/datatables.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+
+{{-- <script>
+  
+  @php
+  if(Session::has('message')){
+  @endphp
+  const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: '{{ Session::get('alert-type') }}',
+  title: '{{ Session::get('message') }}'
+})
+   @php
+  }
+   @endphp
+</script> --}}
 </body>
 </html>

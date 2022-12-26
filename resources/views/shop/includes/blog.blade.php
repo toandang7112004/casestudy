@@ -1,4 +1,4 @@
-@extends('shop.includes.product')
+@extends('shop.includes.home')
 @section('blog')
 <div class="deal_ofthe_week">
 		<div class="container">

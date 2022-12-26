@@ -24,8 +24,10 @@
 
 
 	{{-- main --}}
-	@yield('content')
-
+	<div class="container bt:1000">
+		@yield('blog')
+		@yield('content')
+	</div>
 
 	<!-- Footer -->
     @extends('shop.includes.footer')

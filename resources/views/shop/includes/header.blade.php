@@ -12,9 +12,9 @@
                     <nav class="navbar">
                         <ul class="navbar_user">
                             <li class="checkout">
-                                <a href="{{ route('shop.build') }}">
+                                <a href="{{ route('show.cart') }}">
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="checkout_items" class="checkout_items"></span>
+                                    <span id="checkout_items" class="checkout_items">{{ count((array) session('cart')) }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -30,7 +30,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                               <a class="dropdown-item" href="#">Action</a>
                               <a class="dropdown-item" href="#">Quản Lí Tài Khoản</a>
-                              <a class="dropdown-item" href="{{ route('logoutshop') }}">Đăng Xuất</a>
+                              <a class="dropdown-item" href="{{ route('formregistershop') }}">Đăng Xuất</a>
                             </div>
                           </div>
                     </nav>

@@ -21,9 +21,13 @@ class CategoryController extends Controller
         $categories->name = $request->name;
         // dd($categories);
         try {
+            $notification = [
+                'message' => 'Thêm Thành Công!',
+                'alert-type' => 'success', 
+            ];
             $categories->save();
             // success('thành công');
-            return redirect()->route( 'categories.index' );
+            return redirect()->route( 'categories.index' )->with($notification);
         } catch (\exception $e) {
             $e->getMessage();
         }
@@ -48,9 +52,15 @@ class CategoryController extends Controller
     public function delete($id){
         $categories = Category::find($id);
         try {
+            $notification = [
+                'message' => 'Xóa thành công',
+                'alert-type' => 'success', 
+            ];
             $categories->delete();
-            return redirect()->route('categories.index');
+            return redirect()->route('categories.index')->with($notification);
         } catch (\exception $e) {
+            
+            return redirect()->route('categories.index')->with($notification);
             $e->getMessage();
         }
     }
@@ -69,4 +79,5 @@ class CategoryController extends Controller
         $softs->forceDelete();
         return redirect()->route('categories.index');
     }
+   
 }

@@ -8,6 +8,7 @@
                 <th colspan="4">Name</th>
                 <th colspan="4">Price</th>
                 <th colspan="4">Category_id</th>
+                <th colspan="4">Image</th>
             </tr>
             </thead>
             <tbody>
@@ -17,6 +18,10 @@
                 <td colspan="4">{{ $product->name }}</td>
                 <td colspan="4">{{ $product->price }}</td>
                 <td colspan="4">{{ $product->category_id }}</td>
+                <td>
+                    <img src="{{ asset('public/uploads/' . $product->image) }}" alt=""
+                        style="width: 110px">
+                </td>
             </tr>
             @endforeach
             </tbody>
