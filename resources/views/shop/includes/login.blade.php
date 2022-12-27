@@ -66,11 +66,17 @@
                                                 <input type="text" name="email" class="form-control">
                                             </div>
                                         </div>
+                                        @error('email')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
 
                                         <div class="col-12">
                                             <label class="form-label">Password</label>
                                             <input type="password" name="password" class="form-control">
                                         </div>
+                                        @error('password')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
 
                                         <div class="col-12">
                                             <div class="form-check">

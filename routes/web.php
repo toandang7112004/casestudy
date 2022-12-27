@@ -47,7 +47,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/adminregister',[AdminController::class,'register'])->name('admin.register');
     //đăng xuất
     Route::get('/logout',[AdminController::class,'logout'])->name('logout');
-});
+    //gửi mail khi quên mk customer
+    Route::get('forget-password', [AdminController::class,'forgetpass'])->name('admin.forgetpass');
+    Route::post('/email', [AdminController::class, 'quenmatkhauadmin'])->name('quenmatkhauadmin');
+    });
 
 //categories
 Route::prefix('categories')->group(function () {
@@ -99,10 +102,10 @@ Route::prefix('shop')->group(function () {
 Route::prefix('customer')->group(function () {
     Route::get('/index',[CustomerController::class,'index'])->name('customers.index');
 });
-//đơn hàng
+//checkout
 Route::prefix('order')->group(function(){
     Route::get('/formorder',[OrderController::class,'formorder'])->name('formorder');
-    Route::post('/order',[OrderController::class,'order'])->name('order');
+    Route::post('/saveorder',[OrderController::class,'order'])->name('saveorder');
 });
 
 //giỏ hàng
@@ -110,6 +113,6 @@ Route::get('cart', [ShopController::class,'cart'])->name('show.cart');
 Route::get('add-to-cart/{id}', [ShopController::class,'addToCart'])->name('add-to-cart');
 Route::patch('update-cart', [ShopController::class,'update1'])->name('update-cart');
 Route::delete('remove-from-cart', [ShopController::class,'remove'])->name('remove-from-cart');
-//gửi mail khi quên mk
+//gửi mail khi quên mk customer
 Route::get('forget-password', [ShopController::class,'forgetpass'])->name('show.forgetpass');
-Route::post('post-forget-password', [ShopController::class,'postforgetpass'])->name('show.postforgetpass');
+Route::post('/email', [ShopController::class, 'quenmatkhau'])->name('quenmatkhau');

@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Http\Requests\StoreProductPostRequest;
 use Illuminate\Support\Facades\Log;
 class Productcontroller extends Controller
 {
     //danh sách các sản phẩm
     public function index(){
-        $products = Product::all();
+        $products = Product::paginate(3);
         // dd($products);
-        $categories = Category::all();
+        $categories = Product::with('category')->get();
+        // dd($categories);
         return view('admin.product.index',compact('products','categories'));
     }
     //form thêm mới
@@ -21,10 +23,11 @@ class Productcontroller extends Controller
         return view('admin.product.create',compact('categories'));
     }
     //thêm mới
-    public function store(Request $request){
+    public function store(StoreProductPostRequest $request){
         $products = new Product();
         $products->name = $request->name;
         $products->price = $request->price;
+        $products->description = $request->description;
         $products->category_id = $request->category_id;
         if ($request->hasFile('image')) {
             $get_image = $request->file('image');
@@ -56,10 +59,11 @@ class Productcontroller extends Controller
         return view('admin.product.edit',compact('products','categories'));
     }
     //cập nhật
-    public function update(Request $request,$id){
+    public function update(StoreProductPostRequest $request,$id){
         $products = Product::find($id);
         $products->name = $request->name;
         $products->price = $request->price;
+        $products->description = $request->description;
         $products->category_id = $request->category_id;
         //kiểm tra fil có tồn tại hay không
         if($request->hasFile('image')){

@@ -42,54 +42,49 @@
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <section class="order-form my-4 mx-4">
-        <div class="container pt-4">
-    
-          <div class="row">
+      <div class="container pt-4">
+        <form action="{{ route('saveorder') }}" method="post" >
+          @csrf
+           <div class="row">
             <div class="col-12">
-              <h1 class="text-center">You can see my Order Form</h1>
+              <h1 class="text-center">Điền Thông Tin Gửi Hàng</h1>
               <hr class="mt-1">
             </div>
             <div class="col-12">
-    
               <div class="row mx-4">
                 <div class="col-12 mb-2">
-                  <label class="order-form-label">Name</label>
-                </div>
-                <div class="col-12 col-sm-6">
-                  <input class="order-form-input" placeholder="First">
-                </div>
-                <div class="col-12 col-sm-6 mt-2 mt-sm-0">
-                  <input class="order-form-input" placeholder="Last">
+                  <label class="order-form-label">Họ Và Tên</label>
+                  <input type="text" name="name" class="order-form-input" placeholder="Họ Và Tên" >
                 </div>
               </div>
-    
               <div class="row mt-3 mx-4">
-                <div class="col-12">
+                {{-- <div class="col-12">
                   <label class="order-form-label">Đơn hàng sản phẩm</label>
-                </div>
+                </div> --}}
                 <div class="col-12">
-                  <input class="order-form-input" placeholder="">
+                  <input class="order-form-input" name="phone" placeholder="Phone">
                 </div>
               </div>
               <div class="row mt-3 mx-4">
                 <div class="col-12">
-                  <label class="order-form-label">Information</label>
+                  <label class="order-form-label">Thông Tin</label>
                 </div>
                 <div class="col-12 col-sm-6 mt-2 pr-sm-2">
-                  <input class="order-form-input" placeholder="Email">
+                  <input class="order-form-input" name="email" placeholder="Email">
                 </div>
+                <input type="text" name="customer_id" placeholder="customer_id">
                 <div class="col-12 col-sm-6 mt-2 pl-sm-0">
-                  <input class="order-form-input" placeholder="Địa chỉ">
+                  <input class="order-form-input" name="address" placeholder="Địa chỉ">
                 </div>
               </div>
-    
               <div class="row mt-3">
                 <div class="col-12">
-                 <a href="" class="btn btn-dark d-block mx-auto btn-submit">Đặt Hàng</a>
+                 <input type="submit" value="Submit" class="btn btn-dark d-block mx-auto btn-submit">
               </div>
-    
             </div>
           </div>
+        </form>
+         
         </div>
       </section>
   </body>

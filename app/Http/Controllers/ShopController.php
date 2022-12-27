@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Customer;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
-use App\Jobs\SendEmail;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Requests\StoreShopPostRequest;
+use App\Http\Requests\StoreLoginPostRequest;
+use App\Http\Requests\StoreRegisterPostRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
@@ -23,35 +22,21 @@ class ShopController extends Controller
     }
     public function show(Request $request, $id)
     {
-        // $productKey = 'product_' . $id;
-        // dd($productKey);
-        // dd(!$request->session()->has($productKey));
-        // dd(session()->has($productKey));
-        //kiểm tra session có tồn tại hay không
-        // Nếu không tồn tại, sẽ tự động tăng trường view_count lên 1 đồng thời tạo session lưu trữ key sản phẩm.
-        // if (!$request->session()->has($productKey)) {
-        //     Product::where('id', $id)->increment('view_count');
-        //     $request->Session()->put($productKey,1 );
-        // }
-
-        // Sử dụng Eloquent để lấy ra sản phẩm theo id
-
         $product = Product::find($id);
         $product->view_count++;
         $product->save();
-        // dd(123);
-
-        // Trả về view
         return view('shop.includes.show', compact('product'));
     }
+    //form đăng kí
     public function formregister()
     {
         return view('shop.includes.register');
     }
-    public function register(StoreShopPostRequest $request)
+    //xử lí đămh kí
+    public function register(StoreRegisterPostRequest $request)
     {
         $customer = new Customer;
-        // dd($request->passwordagain);
+        // dd($customer);
         $customer->name = $request->name;
         $customer->email = $request->email;
         $customer->address = $request->address;
@@ -60,14 +45,16 @@ class ShopController extends Controller
             $customer->save();
             return redirect()->route('formloginshop')->with('status', 'Đăng Kí Thành Công');
         } else {
-            return redirect()->route('formregistershop')->with('status', 'Đăng Kí Thất Bại');
+            return redirect()->route('formregistershop')->with('status', 'Mật Khẩu Không trùng khớp');
         }
     }
+    //form login
     public function formlogin()
     {
         return view('shop.includes.login');
     }
-    public function login(Request $request)
+    //xử lí login
+    public function login(StoreLoginPostRequest $request)
     {
         // dd(Auth::guard('customers')->attempt(['email' => $request->email , 'password' => $request->password]));
         if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -85,13 +72,12 @@ class ShopController extends Controller
             return redirect()->route('formloginshop');
         }
     }
-
-
-
+    //view giỏ hàng
     public function cart()
     {
         return view('shop.includes.cart');
     }
+    //thêm vào giỏ hàng
     public function addToCart($id)
     {
         $product = Product::find($id);
@@ -125,6 +111,7 @@ class ShopController extends Controller
         session()->put('cart', $cart);
         return redirect()->back();
     }
+    //cập nhật giỏ hàng
     public function update1(Request $request)
     {
         if ($request->id and $request->quantity) {
@@ -133,6 +120,7 @@ class ShopController extends Controller
             session()->put('cart', $cart);
         }
     }
+    //xóa giỏ hàng
     public function remove(Request $request)
     {
         if ($request->id) {
@@ -147,4 +135,24 @@ class ShopController extends Controller
     public function forgetpass(){
         return view('shop.includes.forgetpass');
     }
+    //xử lí quên mật khẩu
+    public function quenmatkhau(Request $request){
+        $customer = Customer::where('email',$request->email)->first();
+        if($customer){
+            $pass = Str::random(6);
+            $customer->password = bcrypt($pass);
+            $customer->save();
+                $data = [
+                    'name' => $customer->name,
+                    'pass' => $pass,
+                    'email' =>$customer->email,
+                ];
+                Mail::send('shop.email.password', compact('data'), function ($email) use($customer){
+                    $email->subject('Shop shop');
+                    $email->to($customer->email, $customer->name);
+                });
+            }
+            return redirect()->route('formloginshop');
+        }
+        
 }

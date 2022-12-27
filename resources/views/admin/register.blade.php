@@ -54,30 +54,51 @@
 
                   <form class="row g-3 needs-validation" method="post" action="{{route('admin.register')}}">
                     @csrf
+                    @if (session('status') )
+                        <div class="alert alert-danger " role="alert">{{ session('status') }}</div>
+                    @endif
                     <div class="col-12">
                       <label  class="form-label">Your Name</label>
                       <input type="text" name="name" class="form-control" placeholder="Your Name">
                       <div class="invalid-feedback">Please, enter your name!</div>
                     </div>
+                    @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
 
                     <div class="col-12">
                       <label  class="form-label">Your Email</label>
                       <input type="email" name="email" class="form-control" placeholder="Your Email" >
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                     </div>
+                    @error('email')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+
+
+                    <div class="col-12">
+                      <label  class="form-label">Address</label>
+                      <input type="text" name="address" class="form-control" placeholder="Your Email" >
+                      <div class="invalid-feedback">Address!</div>
+                    </div>
+                    @error('address')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
 
                     <div class="col-12">
                       <label  class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" placeholder="Your Password">
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
+                    @error('password')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
 
                     <div class="col-12">
                       <label  class="form-label">Password Again</label>
                       <input type="password" name="passwordagain" class="form-control" placeholder="Your Password">
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
-
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Create Account</button>
                     </div>

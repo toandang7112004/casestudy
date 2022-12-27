@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryPostRequest extends FormRequest
+class StoreLoginPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,15 +21,19 @@ class StoreCategoryPostRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(){
+    public function rules()
+    {
         return [
-            'name' => 'required|unique:categories',
+            'email' => 'required',
+            'password' => 'required',
         ];
     }
-    public function messages(){
+    public function messages()
+    {
         return [
-            'name.required' => 'Vui lòng nhập tên',
-            'name.unique' => 'Tên đã tồn tại',
+            'email.required' => 'Vui lòng nhập email!',
+            'password.required' => 'Vui lòng nhập mật khẩu!'
+            // 'password.min' => 'Mật khẩu quá ngắn!',
         ];
     }
 }

@@ -5,26 +5,31 @@
             <a href="{{route('products.Garbagecan')}}" class="btn btn-danger">Thùng rác</a>
             <thead>
             <tr>
-                <th colspan="4">ID</th>
-                <th colspan="4">Name</th>
-                <th colspan="4">Price</th>
-                <th colspan="4">Category_id</th>
-                <th colspan="4">Image</th>
-                <th colspan="4">Action</th>
+                <th colspan="1">ID</th>
+                <th colspan="1">Tên</th>
+                <th colspan="1">Giá</th>
+                <th colspan="1">Loại</th>
+                <th colspan="1"> Ảnh</th>
+                <th colspan="1">Miêu Tả</th>
+                <th colspan="1">Hoạt Động</th>
             </tr>
             </thead>
             <tbody>
-                @foreach($products as $key => $product)
+                @foreach($categories as $key => $product)
+                {{-- @php
+                 dd($categories)   
+                @endphp --}}
             <tr>
-                <th colspan="4">{{ ++$key }}</th>
-                <td colspan="4">{{ $product->name }}</td>
-                <td colspan="4">{{ $product->price }}</td>
-                <td colspan="4">{{ $product->category_id }}</td>
+                <th colspan="1">{{ ++$key }}</th>
+                <td colspan="1">{{ $product->name }}</td>
+                <td colspan="1">{{ $product->price }}</td>
+                <td colspan="1">{{ $product->category->name }}</td>
                 <td>
                     <img src="{{ asset('public/uploads/' . $product->image) }}" alt=""
                         style="width: 110px">
                 </td>
-                <td colspan="4" >
+                <td colspan="1" >{{ $product->description }}</td>
+                <td colspan="1" >
                     <form action="{{ route('products.delete',[$product->id]) }}" method="post">
                         @csrf
                         @method('DELETE')
@@ -35,6 +40,7 @@
             </tr>
            
             @endforeach
-            </tbody>
-        </table>
+        </tbody>
+    </table>
+    {{ $products->onEachSide(3)->links() }}
 @endsection

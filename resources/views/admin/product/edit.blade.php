@@ -22,8 +22,14 @@
         </div>
         
         <div class="mb-3">
-          <label class="form-label">image</label>
-          <input type="file" class="form-control" name="image">
+          <label class="form-label">Mô Tả</label>
+          <input type="text" name="description" class="form-control" value="{{ $products->description }}">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Ảnh </label>
+          <input type="file" class="form-control" name="image" value="{{$products->image}}">
+          <img src="{{ asset('public/uploads/' . $products->image) }}" height="100px" width="150px">
         </div>
 
         <button type="submit" class="btn btn-primary" >Submit</button>
