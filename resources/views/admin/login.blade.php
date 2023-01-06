@@ -57,6 +57,11 @@
                                             {{ session('status') }}
                                         </div>
                                     @endif
+                                    @if (session('status1'))
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ session('status1') }}
+                                        </div>
+                                    @endif
 
                                     <form class="row g-3 needs-validation" method="post"
                                         action="{{ route('admin.login') }}">
@@ -65,7 +70,7 @@
                                             <label class="form-label">Email</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text">@</span>
-                                                <input type="text" name="email" class="form-control">
+                                                <input type="text" name="email" class="form-control" value="{{old('email')}}">
                                             </div>
                                         </div>
                                         @error('email')

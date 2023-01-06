@@ -1,7 +1,19 @@
 @extends('admin.layouts.master')
 @section('content')
     <table class="table">
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
+        @if (session('status1'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('status1') }}
+            </div>
+        @endif
         <a href="{{ route('categories.create') }}" class="btn btn-primary">Thêm mới</a>
+            
+        <a href="{{ route('categories.export') }}" class="btn btn-success">Xuất excel</a>
         <a href="{{ route('categories.Garbagecan') }}" class="btn btn-danger">Thùng rác</a>
         <thead>
             <tr>
@@ -28,4 +40,5 @@
             @endforeach
         </tbody>
     </table>
+    {{ $categories->onEachSide(3)->links() }}
 @endsection

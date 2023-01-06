@@ -64,21 +64,24 @@
                                     @endif
                                     <div class="col-12">
                                         <label class="form-label">Name</label>
-                                        <input type="text" name="name" class="form-control" placeholder="Tên">
+                                        <input type="text" name="name" class="form-control" placeholder="Tên"
+                                            value="{{ old('name') }}">
                                     </div>
                                     @error('name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                     <div class="col-12">
                                         <label class="form-label">Email </label>
-                                        <input type="email" name="email" class="form-control" placeholder="Email">
+                                        <input type="email" name="email" class="form-control" placeholder="Email"
+                                            value="{{ old('email')}}">
                                     </div>
                                     @error('email')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                     <div class="col-12">
                                         <label class="form-label">Address</label>
-                                        <input type="text" name="address" class="form-control" placeholder="Address">
+                                        <input type="text" name="address" class="form-control" placeholder="Address"
+                                            value="{{ old('address') }}">
                                     </div>
                                     @error('address')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -86,7 +89,7 @@
                                     <div class="col-12">
                                         <label class="form-label">Password</label>
                                         <input type="password" name="password" class="form-control"
-                                            placeholder="Password">
+                                            placeholder="Password" >
                                     </div>
                                     @error('password')
                                         <div class="alert alert-danger">{{ $message }}</div>

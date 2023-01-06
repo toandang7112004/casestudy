@@ -11,6 +11,7 @@ class UserPolicy
  
     public function viewAny(User $user)
     {
+        // return auth()->user()->role == 1 ;
         return $user->hasPermission('viewAny');
     }
 

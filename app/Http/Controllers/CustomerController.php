@@ -11,5 +11,4 @@ class CustomerController extends Controller
         // dd($customers);
         return view('admin.customer.index',compact('customers'));
     }
-    
 }

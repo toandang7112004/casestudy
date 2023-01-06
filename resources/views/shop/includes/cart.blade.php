@@ -29,7 +29,9 @@
                 <?php $total = 0; ?>
                 @if (session('cart'))
                     @foreach (session('cart') as $id => $details)
-                        <?php $total += $details['price'] * $details['quantity']; ?>
+                        <?php $total += $details['price'] * $details['quantity'];
+                            session()->put('totalprice', $total);
+                         ?>
                         <tr>
                             <td data-th="Product">
                                 <div class="row">
@@ -46,7 +48,7 @@
                                 <input type="number" value="{{ $details['quantity'] }}"
                                     class="form-control quantity" />
                             </td>
-                            <td data-th="Subtotal" class="text-center">{{ $details['price'] * $details['quantity'] }}$
+                            <td data-th="Subtotal" class="text-center">{{ $details['price'] * $details['quantity'] }}đ
                             </td>
                             <td class="actions" data-th="">
                                 <button class="update-cart" data-id="{{ $id }}"><i

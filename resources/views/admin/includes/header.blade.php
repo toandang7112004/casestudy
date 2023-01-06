@@ -3,7 +3,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="{{route('profile')}}" class="logo d-flex align-items-center">
+      <a href="{{route('Home.index')}}" class="logo d-flex align-items-center">
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -39,7 +39,8 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
-                <span>{{ auth()->user()->name }}</span>
+                {{-- <span>{{ auth()->user()->name }}</span> --}}
+                <span></span>
               </a>
             </li>
             <li>

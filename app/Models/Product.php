@@ -14,4 +14,11 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+    public function scopeSearch($query){
+        if(request('key')){
+            $key = request('key');
+            $query = $query -> where('name','like','%'.$key.'%');
+            // return $query ;
+        }
+    }
 }

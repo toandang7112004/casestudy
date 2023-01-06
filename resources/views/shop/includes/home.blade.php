@@ -22,12 +22,9 @@
 										<div class="product_image">
 											<img src="{{ asset('public/uploads/' . $product->image) }}" alt="">
 										</div>
-										<div class="favorite favorite_left">
-										</div>
 										<div class="product_info">
-											<h6 class="product_name"><a href="single.html">{{ $product->name}}</a></h6>
-											{{-- <p class="card-text text-danger">Số lượt xem: {{ $product->view_count }}</p> --}}
-											<div class="text-danger">{{ $product->price }}Đ<span>  Số lượt xem: {{ $product->view_count }}</span>
+											{{-- <h6 class="product_name"></h6> --}}
+											<div class="text-danger"><h6>{{ $product->name}}</h6>{{ $product->price }}Đ<span>  Số lượt xem: {{ $product->view_count }}</span>
 												<br>
 												<a href="{{ route('add-to-cart', [$product->id]) }}" class="btn btn-outline-dark">Mua</a>
 												<a href="{{ route('show', $product->id) }}" class="btn btn-outline-dark">Xem chi Tiết</a>

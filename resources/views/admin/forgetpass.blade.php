@@ -52,12 +52,14 @@
                                         <h5 class="card-title text-center pb-0 fs-4">Vui lòng nhập email</h5>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" method="post" action="{{ route('quenmatkhauadmin') }}">
+                                    <form class="row g-3 needs-validation" method="post"
+                                        action="{{ route('quenmatkhauadmin') }}">
+                                        
                                         @csrf
-                                        @if( session('error') )
-                                                <div class="alert alert-danger" role="alert">
-                                                    {{ session('error') }}
-                                                </div>
+                                        @if (session('error'))
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ session('error') }}
+                                            </div>
                                         @endif
                                         <div class="col-12">
                                             <label class="form-label">Email</label>

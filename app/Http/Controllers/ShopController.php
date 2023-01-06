@@ -26,13 +26,14 @@ class ShopController extends Controller
         $product->view_count++;
         $product->save();
         return view('shop.includes.show', compact('product'));
+        
     }
     //form đăng kí
     public function formregister()
     {
         return view('shop.includes.register');
     }
-    //xử lí đămh kí
+    //xử lí đăng kí
     public function register(StoreRegisterPostRequest $request)
     {
         $customer = new Customer;
@@ -154,5 +155,9 @@ class ShopController extends Controller
             }
             return redirect()->route('formloginshop');
         }
-        
+    //tìm kiếm
+    public function ajaxSearch(){
+        $data = Product::search()->get();
+        return $data;
+    }
 }

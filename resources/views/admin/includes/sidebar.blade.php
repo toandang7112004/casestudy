@@ -23,6 +23,21 @@
                               <i class="bi bi-circle"></i><span>Quản Lí Khách Hàng</span>
                           </a>
                       </li>
+                      <li>
+                          <a href="{{ route('order.index') }}">
+                              <i class="bi bi-circle"></i><span>Quản Lí Đơn Hàng</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="{{ route('users.index') }}">
+                              <i class="bi bi-circle"></i><span>Quản Lí Nhân Viên</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="{{ route('roles.index') }}">
+                              <i class="bi bi-circle"></i><span>Quản Lí quyền</span>
+                          </a>
+                      </li>
                   </ul>
               </li>
           </ul>
