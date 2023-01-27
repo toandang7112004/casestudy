@@ -11,6 +11,7 @@ class CategoryController extends Controller
 {
     //categories
     public function index(){
+        
         $categories = Category::paginate(3);
         // $this->authorize('viewAny', User::class);
         // if (auth()->user()->can('viewAny', User::class)) {

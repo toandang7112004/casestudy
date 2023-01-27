@@ -3,21 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Role;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\SoftDeletes;
+
 class User extends Authenticatable
-{
-    use softDeletes;
-    use HasApiTokens, HasFactory, Notifiable;
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+{use Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,HasPermissions;
+protected $table = 'users';
     protected $hidden = [
         'password',
         'remember_token',
@@ -25,7 +21,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function role (){
-        return $this->belongsToMany(Role::class,'user_roles','user_id','role_id');
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'user_id', 'id');
     }
 }

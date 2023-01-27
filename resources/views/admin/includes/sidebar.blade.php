@@ -29,15 +29,16 @@
                           </a>
                       </li>
                       <li>
-                          <a href="{{ route('users.index') }}">
-                              <i class="bi bi-circle"></i><span>Quản Lí Nhân Viên</span>
+                          <a href="{{ route('group.index') }}">
+                              <i class="bi bi-circle"></i><span>group</span>
                           </a>
                       </li>
                       <li>
-                          <a href="{{ route('roles.index') }}">
-                              <i class="bi bi-circle"></i><span>Quản Lí quyền</span>
+                          <a href="{{ route('user.index') }}">
+                              <i class="bi bi-circle"></i><span>User</span>
                           </a>
                       </li>
+                      
                   </ul>
               </li>
           </ul>

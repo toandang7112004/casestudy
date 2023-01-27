@@ -23,11 +23,15 @@ class OrderController extends Controller
     }
     public function order(Request $request)
     {
+        // dd(1);
         $orders = new Order;
         // dd($customer);
         $orders->customer_id = auth()->guard('customers')->user()->id;
         // dd(auth()->guard('customers')->user()->id);
         $orders->totalmoney = $request->totalmoney;
+        $orders->total = $request->quantity;
+        // $orders->save(); 
+        // dd($orders);
         try {
             $orders->save();
             return redirect()->route('shop.index');
@@ -37,6 +41,7 @@ class OrderController extends Controller
     }
     public function details($id)
     {
+
         $items=DB::table('order_detail')
         ->join('orders','order_detail.order_id','=','orders.id')
         ->join('products','order_detail.product_id','=','products.id')

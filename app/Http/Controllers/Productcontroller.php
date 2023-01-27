@@ -13,6 +13,7 @@ class Productcontroller extends Controller
 {
     //danh sách các sản phẩm
     public function index(){
+        $this->authorize('viewAny', Product::class);
         $products = Product::paginate(3);
         // dd($products);
         $categories = Product::with('category')->get();
@@ -21,6 +22,7 @@ class Productcontroller extends Controller
     }
     //form thêm mới
     public function create(){
+        $this->authorize('create', Product::class);
         $categories = Category::all();
         return view('admin.product.create',compact('categories'));
     }

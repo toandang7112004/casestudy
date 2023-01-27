@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Exports;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ProductExport implements FromCollection
+class ProductExport implements FromCollection,WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -21,10 +22,8 @@ class ProductExport implements FromCollection
             'Price',    
             "Created",
             "Updated"
-            
         ];
     }
- 
     public function map($user): array {
         return [
             $user->id,
@@ -34,4 +33,5 @@ class ProductExport implements FromCollection
             $user->updated_at
         ];
     }
+
 }

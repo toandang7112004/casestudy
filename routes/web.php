@@ -10,7 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShopController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\GroupController;
 use App\Models\Category;
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +23,7 @@ use App\Models\Category;
 |
 */
 
-// Route::get('/', function () {
-//     return view('admin.includes.content');
-// });
-// Route::get('/', function () {
-//     return view('shop.includes.blog');
-//     // return view('shop.layouts.master');
-//     return view('shop.cart');
-// });
+
 
 
 // trang chủ admin
@@ -125,19 +118,28 @@ Route::delete('remove-from-cart', [ShopController::class, 'remove'])->name('remo
 Route::get('forget-password', [ShopController::class, 'forgetpass'])->name('show.forgetpass');
 Route::post('/email', [ShopController::class, 'quenmatkhau'])->name('quenmatkhau');
 //user
-Route::prefix('users')->group(function () {
-    Route::get('index', [UserController::class, 'index'])->name('users.index');
-    Route::get('create', [UserController::class, 'create'])->name('users.create');
-    Route::post('store', [UserController::class, 'store'])->name('users.store');
-    Route::get('edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-    Route::post('update/{id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('{id}', [UserController::class, 'delete'])->name('users.delete');
-    Route::get('/Garbagecan', [UserController::class, 'Garbagecan'])->name('users.Garbagecan');
-    Route::get('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
-    Route::get('/deleteforever/{id}', [UserController::class, 'deleteforever'])->name('users.deleteforever');
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+    Route::get('/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/admin', [UserController::class, 'showAdmin'])->name('user.admin');
 });
-//role
-Route::prefix('roles')->group(function () {
-    Route::get('index', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('create', [RoleController::class, 'create'])->name('roles.create');
-});
+Route::group(['prefix' => 'groups'], function () {
+    Route::get('/', [GroupController::class, 'index'])->name('group.index');
+    Route::get('/create', [GroupController::class, 'create'])->name('group.create');
+    Route::post('/store', [GroupController::class, 'store'])->name('group.store');
+
+    Route::get('/edit/{id}', [GroupController::class, 'edit'])->name('group.edit');
+    Route::put('/update/{id}', [GroupController::class, 'update'])->name('group.update');
+    Route::delete('destroy/{id}', [GroupController::class, 'destroy'])->name('group.destroy');
+    // trao quyền
+    Route::get('/detail/{id}', [GroupController::class, 'detail'])->name('group.detail');
+    Route::put('/group_detail/{id}', [GroupController::class, 'group_detail'])->name('group.group_detail');
+   });
+   Route::group(['prefix' => 'groups'], function () {
+   });

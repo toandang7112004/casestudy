@@ -27,9 +27,6 @@
         </thead>
         <tbody>
             @foreach ($products as $key => $product)
-                {{-- @php
-                 dd($categories)   
-                @endphp --}}
                 <tr>
                     <th colspan="1">{{ ++$key }}</th>
                     <td colspan="1">{{ $product->name }}</td>
@@ -45,7 +42,14 @@
                             @method('DELETE')
                             <button onclick="return confirm('Bạn có chắc chắn xóa không?');"
                                 class="btn btn-danger">Xóa</button>
+                                @if (Auth::user()->hasPermission('Product_update'))
                             <a href="{{ route('products.edit', [$product->id]) }}" class="btn btn-info">Edit</a>
+                            @else
+                            <i data-bs-toggle="tooltip" data-bs-placement="top" title="Bạn không có quyền làm điều này!">
+                                <button type="button" class="btn btn-primary" disabled>Edit</button>
+                            </i>
+                            @endif
+                            <a href="" class="btn btn-primary">show</a>
                         </form>
                     </td>
                 </tr>

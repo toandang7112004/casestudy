@@ -1,118 +1,137 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\UserRequet;
+use App\Http\Requests\ProductRequest;
+use App\Models\Group;
 use App\Models\User;
-use App\Models\Role;
-use App\Models\Role_User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-       $users = User::all();
-       return view('admin.user.list', compact('users'));
+
+    public function index(){
+        // $this->authorize('viewAny', User::class);
+        $users = User::all();
+        // $users = User::search()->paginate(4);
+        $param = [
+            'users' => $users,
+        ];
+        return view('admin.user.index', $param);
     }
+
+    public function showAdmin(){
+
+        $admins = User::get();
+        $param = [
+            'admins' => $admins,
+        ];
+        return view('admin.user.admin', $param);
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-        $roles = Role::all();
-        return view('admin.user.create', compact('roles'));
+        // $this->authorize('create', User::class);
+        $groups = Group::get();
+        $param = [
+            'groups' => $groups,
+        ];
+        return view('admin.user.add', $param);
     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        try {
-            DB::beginTransaction();
-            $users =  new User();
-            $users->name = $request->name;
-            $users->email = $request->email;
-            $users->password = bcrypt($request->password);
-            $users->address = $request->address;
-            // $users->save();
-            //    $roleids = $request->role_id;
-            // dd($users->role());
-            $users->role()->attach($request->role_id);
-            DB::commit();
-            return redirect()->route('users.index');
-            // foreach ($roleids as $roleitem){
-            //     DB::table('Role_User')->insert([
-            //         'role_id' => $roleitem,
-            //         'user_id' => $users->id,
-            //     ]);
-            // }
-        } catch (\exception $e) {
-            DB::rollBack();
-            Log::error($e->getMessage);
-        }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->address = $request->address;
+        $user->group_id = $request->group_id;
+        $user->save();
+
+        $data = [
+            'name' => $request->name,
+            'pass' => $request->password,
+        ];
+        // Mail::send('admin.mail.mail', compact('data'), function ($email) use($request) {
+        //     $email->subject('NowSaiGon');
+        //     $email->to($request->email, $request->name);
+        // });
+
+        $notification = [
+            'message' => 'Đăng ký thành công!',
+            'alert-type' => 'success'
+        ];
+        return redirect()->route('user.index')->with($notification);
     }
+
+    public function show($id)
+    {
+        // $this->authorize('view', User::class);
+        $user = User::findOrFail($id);
+        $param =[
+            'user'=>$user,
+        ];
+
+
+        // $productshow-> show();
+        return view('admin.user.profile',  $param );
+    }
+
     public function edit($id)
     {
-        $roles = Role::all();
-        $users = User::find($id);
-        $role_id = $users->role;
-        // dd($role_id);
-        return view('admin.user.edit',compact('roles','users','role_id'));
+        // $this->authorize('view', User::class);
+        $user = User::find($id);
+        $groups=Group::get();
+        $param = [
+            'user' => $user ,
+            'groups' => $groups
+        ];
+        return view('admin.user.edit' , $param);
     }
+
     public function update(Request $request, $id)
-    {  
-        try {
-        DB::beginTransaction();
-        $users =  User::find($id);
-        // dd($users);
-        $users->name = $request->name;
-        $users->email = $request->email;
-        $users->password = bcrypt($request->password);
-        $users->address = $request->address;
-        $users->save();
-        $users->role()->sync($request->role_id);
-        DB::commit();
-        return redirect()->route('users.index');
-    } catch (\exception $e) {
-        DB::rollBack();
-        Log::error($e->getMessage);
+    {
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        // $user->password = bcrypt($request->password);
+        $user->address = $request->address;
+        $user->group_id = $request->group_id;
+        $user->save();
+        $notification = [
+            'message' => 'Chỉnh Sửa Thành Công!',
+            'alert-type' => 'success'
+        ];
+        return redirect()->route('user.index')->with($notification);
     }
-}
-     //xóa tạm thời
-     public function delete($id){
-        $users = User::find($id);
-        try {
-            $users->delete();
-            return redirect()->route('users.index');
-        } catch (\exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->route('users.index');
+    public function destroy($id)
+    {
+        // $this->authorize('forceDelete', Product::class);
+        $notification = [
+            'sainhap' => '!',
+        ];
+
+        $user = User::find($id);
+        if($user->group->name!='Supper Admin'){
+            $user->delete();
         }
-    }
-    //thùng rác
-    public function Garbagecan(){
-        $users = User::onlyTrashed()->get();
-        return view('admin.user.soft',compact('users'));
-    }
-    //khôi phục
-    public function restore($id){
-        $users = User::withTrashed()->find($id);
-        try {
-            $users->restore();
-            return redirect()->route('users.index');
-        } catch (\exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->route('users.index');
-        }
-        return redirect()->route('users.index');
-    }
-    //xóa vĩnh viễn
-    public function deleteforever($id){
-        $users = User::withTrashed()->find($id);
-        try {
-            $users->forceDelete();
-            return redirect()->route('users.index');
-        } catch (\exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->route('users.index');
+        else{
+            return dd(__METHOD__);
         }
     }
 }

@@ -43,26 +43,80 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area me-1"></i>
-                        Area Chart Example
-                    </div>
-                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+        <section class="section">
+            <div class="row">
+              <div class="col-lg-6">
+      
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Top khách hàng</h5>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Address</th>
+                          <th scope="col">Số đơn hàng đã mua</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ( $topcustomers as $key => $topcustomer )
+                        <tr>
+                            <td>{{ $topcustomer->name }}</td>
+                            <td>{{ $topcustomer->address }}</td>
+                            <td>{{ $topcustomer->total }}</td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                    <!-- End Default Table Example -->
+                  </div>
                 </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar me-1"></i>
-                        Bar Chart Example
-                    </div>
-                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+      
+              </div>
+      
+              <div class="col-lg-6">
+      
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Table with stripped rows</h5>
+      
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Position</th>
+                          <th scope="col">Age</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Brandon Jacob</td>
+                          <td>Designer</td>
+                          <td>28</td>
+                        </tr>
+                        <tr>
+                          <td>Bridie Kessler</td>
+                          <td>Developer</td>
+                          <td>35</td>
+                        </tr>
+                        <tr>
+                          <td>Ashleigh Langosh</td>
+                          <td>Finance</td>
+                          <td>45</td>
+                        </tr>
+                       
+                      </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+      
+                  </div>
                 </div>
+      
+      
+              </div>
             </div>
-        </div>
+          </section>
     </div>
 </main>
 {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

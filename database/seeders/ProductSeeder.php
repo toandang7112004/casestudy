@@ -18,6 +18,8 @@ class ProductSeeder extends Seeder
             'name' =>'oppo',
             'price' =>'100000',
             'category_id' =>1,
+            'view_count' =>1,
+            'description' =>'sád'
         ]);
     }
 }
