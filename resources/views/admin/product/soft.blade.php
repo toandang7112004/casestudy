@@ -19,8 +19,12 @@
                 <td colspan="4">{{ $soft->price }}</td>
                 <td colspan="4">{{ $soft->category_id }}</td>
                 <td>
+                    @if (Auth::user()->hasPermission('Product_forceDelete'))
                     <a href="{{route('products.deleteforever',[$soft->id])}}" class="btn btn-danger">Delete forever</a>
+                    @endif
+                    @if (Auth::user()->hasPermission('Product_restore'))
                     <a href="{{ route('products.restore',[$soft->id]) }}" class="btn btn-primary">Restore</a>
+                    @endif
                 </td>
             </tr>
             @endforeach

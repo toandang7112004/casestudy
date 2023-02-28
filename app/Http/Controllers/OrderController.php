@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Customer;
+use App\Models\Order_detail;
 use App\Models\OrderDetail;
+use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -14,26 +17,21 @@ class OrderController extends Controller
 {
     public function index(){
         $orders = Order::all();
-        // dd($orders);
         return view( 'admin.order.index',compact('orders') );
     }
     public function formorder()
     {
-        return view('shop.includes.order');
+        return view('shop.includes.checkout');
     }
-    public function order(Request $request)
+    public function checkout(Request $request)
     {
-        $orders = new Order;
-        // dd($customer);
-        $orders->customer_id = auth()->guard('customers')->user()->id;
-        // dd(auth()->guard('customers')->user()->id);
-        $orders->totalmoney = $request->totalmoney;
-        try {
-            $orders->save();
-            return redirect()->route('shop.index');
-        } catch (\exception $e) {
-            Log::error($e->getMessage());
-        }
+        $order = new Order;
+        $order->customer_id = auth()->guard('customers')->user()->id;
+        $order->total = 0;
+        $order->status = 0;
+        $order->date_ship = null;
+        dd($order);
+        // $order->save();
     }
     public function details($id)
     {
@@ -42,7 +40,6 @@ class OrderController extends Controller
         ->join('products','order_detail.product_id','=','products.id')
         ->select('products.*', 'order_detail.*','orders.id')
         ->where('orders.id','=',$id)->get();
-        // dd($items);
         return view('admin.order.details',compact('items'));
     }
 }

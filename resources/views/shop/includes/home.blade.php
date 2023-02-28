@@ -1,5 +1,6 @@
 @extends('shop.layouts.master')
 @section('content')
+@include('sweetalert::alert')
 	<div class="best_sellers">
 		<div class="container">
 			<div class="row">
@@ -20,7 +21,7 @@
 								<div class="product-item">
 									<div class="product ">
 										<div class="product_image">
-											<img src="{{ asset('public/uploads/' . $product->image) }}" alt="">
+											<img src="{{ asset('public/uploads/' . $product->image) }}" style="height:240px" alt="">
 										</div>
 										<div class="product_info">
 											{{-- <h6 class="product_name"></h6> --}}

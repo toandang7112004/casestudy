@@ -7,14 +7,14 @@
             <input type="text" class="form-control" name="name">
         </div>
         @error('name')
-            <div class="alert alert-danger">{{ $message }}</div>
+            <div class="text text-danger">{{ $message }}</div>
         @enderror
         <div class="mb-3">
             <label class="form-label">Giá</label>
             <input type="text" class="form-control" name="price">
         </div>
         @error('price')
-            <div class="alert alert-danger">{{ $message }}</div>
+            <div class="text text-danger">{{ $message }}</div>
         @enderror
         <div class="mb-3">
             <select name="category_id" id="">
@@ -24,17 +24,18 @@
                     </option>
                 @endforeach
                 @error('category_id')
-                    <div class="alert alert-danger">{{ $message }}</div>
+                    <div class="text text-danger">{{ $message }}</div>
                 @enderror
             </select>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Mô Tả</label>
-            <input type="text" name="description" class="form-control">
+            <textarea type="text" name="description" id="ckeditor" class="form-control" cols="10" rows="5"></textarea>
+        </div>
         </div>
         @error('description')
-            <div class="alert alert-danger">{{ $message }}</div>
+            <div class="text text-danger">{{ $message }}</div>
         @enderror
 
         <div class="mb-3">
@@ -42,10 +43,14 @@
             <input type="file" class="form-control" name="image">
         </div>
         @error('image')
-            <div class="alert alert-danger">{{ $message }}</div>
+            <div class="text text-danger">{{ $message }}</div>
         @enderror
 
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href="{{ route('products.index') }}" class="btn btn-primary">Back</a>
     </form>
+    <script src="{{ asset('admin/ckeditor/ckeditor.js') }}"></script>
+    <script>
+        CKEDITOR.replace('ckeditor');
+    </script>
 @endsection

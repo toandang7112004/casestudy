@@ -34,7 +34,7 @@
                           </a>
                       </li>
                       <li>
-                          <a href="{{ route('roles.index') }}">
+                          <a href="{{ route('group.index') }}">
                               <i class="bi bi-circle"></i><span>Quản Lí quyền</span>
                           </a>
                       </li>

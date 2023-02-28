@@ -11,7 +11,6 @@ class HomeController extends Controller
 {
     public function index(){
         $customers = Customer::pluck('id')->count();
-        // dd($customers);
         $products = Product::pluck('id')->count();  
         $categories = Category::pluck('id')->count();  
         $orders = Order::pluck('id')->count();  

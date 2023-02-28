@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
-    //trang chủ
     public function index()
     {
         $Products = Product::all();
-        // dd($Products);
         return view('shop.includes.blog', compact('Products'));
     }
     public function show(Request $request, $id)
@@ -26,42 +24,38 @@ class ShopController extends Controller
         $product->view_count++;
         $product->save();
         return view('shop.includes.show', compact('product'));
-        
     }
-    //form đăng kí
     public function formregister()
     {
         return view('shop.includes.register');
     }
-    //xử lí đăng kí
+
     public function register(StoreRegisterPostRequest $request)
     {
         $customer = new Customer;
-        // dd($customer);
         $customer->name = $request->name;
         $customer->email = $request->email;
         $customer->address = $request->address;
         $customer->password = bcrypt($request->password);
         if ($request->password == $request->passwordagain) {
             $customer->save();
-            return redirect()->route('formloginshop')->with('status', 'Đăng Kí Thành Công');
+            toast('Đăng nhập thành công','success','top-right');
+            return redirect()->route('formloginshop');
         } else {
-            return redirect()->route('formregistershop')->with('status', 'Mật Khẩu Không trùng khớp');
+            return redirect()->route('formregistershop');
         }
     }
-    //form login
     public function formlogin()
     {
         return view('shop.includes.login');
     }
-    //xử lí login
     public function login(StoreLoginPostRequest $request)
     {
-        // dd(Auth::guard('customers')->attempt(['email' => $request->email , 'password' => $request->password]));
         if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            // dd(123);
+            toast('Đăng nhập thành công','success','top-right');
             return redirect()->route('shop.profile');
         } else {
+            toast('Đăng nhập thất bại','success','top-right');
             return redirect()->route('formloginshop');
         }
     }
@@ -73,12 +67,10 @@ class ShopController extends Controller
             return redirect()->route('formloginshop');
         }
     }
-    //view giỏ hàng
     public function cart()
     {
         return view('shop.includes.cart');
     }
-    //thêm vào giỏ hàng
     public function addToCart($id)
     {
         $product = Product::find($id);
@@ -132,31 +124,31 @@ class ShopController extends Controller
             }
         }
     }
-    //quên mật khẩu
-    public function forgetpass(){
+    public function forgetpass()
+    {
         return view('shop.includes.forgetpass');
     }
-    //xử lí quên mật khẩu
-    public function quenmatkhau(Request $request){
-        $customer = Customer::where('email',$request->email)->first();
-        if($customer){
+    public function quenmatkhau(Request $request)
+    {
+        $customer = Customer::where('email', $request->email)->first();
+        if ($customer) {
             $pass = Str::random(6);
             $customer->password = bcrypt($pass);
             $customer->save();
-                $data = [
-                    'name' => $customer->name,
-                    'pass' => $pass,
-                    'email' =>$customer->email,
-                ];
-                Mail::send('shop.email.password', compact('data'), function ($email) use($customer){
-                    $email->subject('Shop shop');
-                    $email->to($customer->email, $customer->name);
-                });
-            }
-            return redirect()->route('formloginshop');
+            $data = [
+                'name' => $customer->name,
+                'pass' => $pass,
+                'email' => $customer->email,
+            ];
+            Mail::send('shop.email.password', compact('data'), function ($email) use ($customer) {
+                $email->subject('Shop shop');
+                $email->to($customer->email, $customer->name);
+            });
         }
-    //tìm kiếm
-    public function ajaxSearch(){
+        return redirect()->route('formloginshop');
+    }
+    public function ajaxSearch()
+    {
         $data = Product::search()->get();
         return $data;
     }

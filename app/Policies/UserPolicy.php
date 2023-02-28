@@ -8,43 +8,32 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class UserPolicy
 {
     use HandlesAuthorization;
- 
     public function viewAny(User $user)
     {
-        // return auth()->user()->role == 1 ;
-        return $user->hasPermission('viewAny');
+        return $user->hasPermission('User_viewAny');
     }
-
     public function view(User $user, User $model)
     {
-        return $user->hasPermission('view');
+        return $user->hasPermission('User_view');
     }
-
     public function create(User $user)
     {
-        return $user->hasPermission('create');
+        return $user->hasPermission('User_create');
     }
-
-
     public function update(User $user, User $model)
     {
-        return $user->hasPermission('update');
+        return $user->hasPermission('User_update');
     }
-
     public function delete(User $user, User $model)
     {
-        return $user->hasPermission('delete');
+        return $user->hasPermission('User_delete');
     }
-
-
     public function restore(User $user, User $model)
     {
-        return $user->hasPermission('restore');
+        return $user->hasPermission('User_restore');
     }
-
-
     public function forceDelete(User $user, User $model)
     {
-        return $user->hasPermission('forceDelete');
+        return $user->hasPermission('User_forceDelete');
     }
 }

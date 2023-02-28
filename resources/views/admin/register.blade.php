@@ -77,18 +77,6 @@
                                     @error('email')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
-
-
-                                    <div class="col-12">
-                                        <label>Address</label>
-                                        <input type="text" name="address" class="form-control"
-                                            placeholder="Your Address" value="{{ old('address') }}">
-                                    </div>
-                                    @error('address')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-
-
                                     <div class="col-12">
                                         <label>Password</label>
                                         <input type="password" name="password" class="form-control"

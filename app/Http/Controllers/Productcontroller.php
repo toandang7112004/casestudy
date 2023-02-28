@@ -9,18 +9,19 @@ use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreProductPostRequest;
 use Illuminate\Support\Facades\Log;
+use App\Policies\ProductPolicy;
 class Productcontroller extends Controller
 {
     //danh sách các sản phẩm
     public function index(){
+        $this->authorize('viewAny', Product::class);
         $products = Product::paginate(3);
-        // dd($products);
         $categories = Product::with('category')->get();
-        // dd($categories);
         return view('admin.product.index',compact('products','categories'));
     }
     //form thêm mới
     public function create(){
+        $this->authorize('create', Product::class);
         $categories = Category::all();
         return view('admin.product.create',compact('categories'));
     }
@@ -43,18 +44,20 @@ class Productcontroller extends Controller
             // dd($new_image);
             $get_image->move($path, $new_image);
             $products->image = $new_image;
-            // dd($products);
         }
         try {
             $products->save();
-            return redirect()->route('products.index')->with('status','Thêm thành công');
+            toast('Thêm sản phẩm thành công','success','top-right');
+            return redirect()->route('products.index');
         } catch (\exception $e) {
             Log::error($e->getMessage());
-            return redirect()->route('products.index')->with('status1','Thêm thất bại');
+            toast('Thêm sản phẩm không thành công','error','top-right');
+            return redirect()->route('products.index');
         }
     }
     //form cập nhật
     public function edit($id){
+        $this->authorize('update', Product::class);
         $products = Product::find($id);
         $categories = Category::all();
         return view('admin.product.edit',compact('products','categories'));
@@ -85,64 +88,65 @@ class Productcontroller extends Controller
         }
         try {
             $products->save();
-            return redirect()->route('products.index')->with('status','Chỉnh sửa thành công');
+            toast('Sửa sản phẩm thành công','success','top-right');
+            return redirect()->route('products.index');
         } catch (\exception $e) {
             Log::error($e->getMessage());
-            return redirect()->route('products.index')->with('status1','Chỉnh sửa thất bại');
+            toast('Sửa sản phẩm không thành công','error','top-right');
+            return redirect()->route('products.index');
         }
     }
     //xóa tạm thời
     public function delete($id){
+        $this->authorize('delete', Product::class);
         $products = Product::find($id);
         try {
             $products->delete();
+            toast('Xóa sản phẩm thành công','success','top-right');
             return redirect()->route('products.index')->with('status','Xóa thành công');
         } catch (\exception $e) {
             Log::error($e->getMessage());
+            toast('Đưa vào thùng rác','error','top-right');
             return redirect()->route('products.index')->with('status1','Xóa thất bại');
         }
     }
-    //thùng rác
     public function Garbagecan(){
-        // dd($product);
         $softs = Product::onlyTrashed()->get();
-        // dd($softs);
         return view('admin.product.soft',compact('softs'));
     }
-    //khôi phục
     public function restore($id){
-        // dd($id);
+        $this->authorize('restore', Product::class);
         $softs = Product::withTrashed()->find($id);
         try {
             $softs->restore();
-            return redirect()->route('products.index')->with('status','Khôi phục thành công!');
+            toast('khôi phục sản phẩm thành công','success','top-right');
+            return redirect()->route('products.index');
         } catch (\exception $e) {
             Log::error($e->getMessage());
-            return redirect()->route('products.index')->with('status1','khôi phục thất bại!');
+            toast('khôi phục sản phẩm không thành công','error','top-right');
+            return redirect()->route('products.index');
         }
         return redirect()->route('products.index');
     }
-    //xóa vĩnh viễn
     public function deleteforever($id){
+        $this->authorize('deleteforever', Product::class);
         $softs = Product::withTrashed()->find($id);
         try {
             $softs->forceDelete();
-            return redirect()->route('products.index')->with('status','Xóa vĩnh viễn thành công');
+            toast('xóa vĩnh viễn sản phẩm thành công','success','top-right');
+            return redirect()->route('products.index');
         } catch (\exception $e) {
             Log::error($e->getMessage());
-            return redirect()->route('products.index')->with('status1','không được xóa sản phẩm này');
+            toast('xóa vĩnh viễn sản phẩm không thành công','error','top-right');
+            return redirect()->route('products.index');
         }
-       
     }
-
-    //search
     public function search(Request $request ){
         $products = Product::where('name','Like','%'.$request->search.'%')
                             ->orwhere('price',$request->search)
                             ->get();
         return view('admin.product.search',compact('products'));
     }
-    //xuất export
     public function export(){
         return Excel::download(new ProductExport,'products.xlsx');
     }

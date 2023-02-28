@@ -60,8 +60,8 @@
                         <div class="row">
                             <div class="col-lg-9 image_col order-lg-2 order-1">
                                 <div class="single_product_image">
-                                    <div class="single_product_image_background"
-                                        style="background-image:url({{ asset('public/uploads/' . $product->image) }})">
+                                    <div class="single_product_image_background">
+                                    <img src="{{ asset('public/uploads/' . $product->image) }}" alt="" style="width: 500px">
                                     </div>
                                 </div>
                             </div>
@@ -70,14 +70,15 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="product_details">
-                        <div class="product_details_title">
-                            <h2>{{ $product->name }}</h2>
-                            <p>{{ $product->description }}</p>
-                        </div>
                         <div class="free_delivery d-flex flex-row align-items-center justify-content-center">
-                            <span class="ti-truck"></span><span>free delivery</span>
+                            <span class="ti-truck"></span><span>Thông Tin sản phẩm</span>
                         </div>
-                        <div class="product_price">{{ $product->price }}đ</div>
+                        <div class="product_details_title">
+                            <h3>Tên sản phẩm : {{ $product->name }}</h3>
+                            <p>Mô tả sản phẩm : {{ $product->description }}</p>
+                        </div>
+                        
+                        <div class="product_price">Giá tiền : {{ $product->price }}vnđ</div>
                         <p class="card-text text-danger">Số lượt xem: {{ $product->view_count }}</p>
 
                         <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">

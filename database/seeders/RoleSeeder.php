@@ -14,21 +14,37 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
-            'name' =>'admin',
-            'display_name' =>'Quản Trị hệ thống'
-        ]);
-        DB::table('roles')->insert([
-            'name' =>'guest',
-            'display_name' =>'Khách hàng'
-        ]);
-        DB::table('roles')->insert([
-            'name' =>'developer',
-            'display_name' =>'Phát triển hệ thống'
-        ]);
-        DB::table('roles')->insert([
-            'name' =>'content',
-            'display_name' =>'chỉnh sửa nội dung'
-        ]);
+        $groups = ['Category', 'Group', 'Order', 'Product', 'User'];
+        $actions = ['viewAny', 'view', 'create', 'update', 'delete', 'restore', 'deleteforever'];
+        foreach ($groups as $group) {
+            foreach ($actions as $action) {
+                DB::table('roles')->insert([
+                    'name' => $group . '_' . $action,
+                    'group_name' => $group,
+                ]);
+            }
+        }
+        DB::table('roles')->insert(
+            [
+                'name' => 'User_adminupdatepass',
+                'group_name' => 'User'
+
+            ]
+        );
+        DB::table('roles')->insert(
+            [
+                'name' => 'Customer_viewAny',
+                'group_name' => 'Customer'
+
+            ]
+        );
+
+        $group = ['Category', 'Group', 'Product'];
+        foreach ($group as $groups) {
+            DB::table('roles')->insert([
+                'name' => $groups . '_viewTrash',
+                'group_name' => $groups,
+            ]);
+        }
     }
 }

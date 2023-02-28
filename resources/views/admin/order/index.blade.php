@@ -5,8 +5,8 @@
             <thead>
             <tr>
                 <th colspan="4">ID</th>
-                <th colspan="4">Name</th>
-                <th colspan="4">Address</th>
+                <th colspan="4">Tên</th>
+                <th colspan="4">Địa chỉ</th>
                 <th colspan="4">Tổng tiền</th>
                 <th colspan="4">Chi Tiết</th>
             </tr>

@@ -30,11 +30,10 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('admin/assets/css/style.css') }}" rel="stylesheet">
-
 </head>
 
 <body>
-
+    @include('sweetalert::alert')
     <main>
         <div class="container">
 
@@ -93,10 +92,7 @@
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Login</button>
                                         </div>
-                                        <div class="col-12">
-                                            <p class="small mb-0">Don't have account? <a
-                                                    href="{{ route('formregister') }}">Create an account</a></p>
-                                        </div>
+                                       
                                     </form>
 
                                 </div>
