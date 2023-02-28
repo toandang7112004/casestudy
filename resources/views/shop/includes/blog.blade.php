@@ -10,6 +10,7 @@
 	}
 </style>
 <div class="deal_ofthe_week">
+@include('sweetalert::alert')
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-lg-6">

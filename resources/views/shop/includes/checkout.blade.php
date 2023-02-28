@@ -44,12 +44,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
-    <div class="row">
-        <div class="col-md-7">
-            <section class="order-form my-4 mx-4">
-                <div class="container pt-4">
-                    <form action="{{ route('savecheckout') }}" method="post">
-                        @csrf
+    <form action="{{ route('savecheckout') }}" method="post">
+        @csrf
+        <div class="row">
+            <div class="col-md-5" id="md-5">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-dark">Giỏ hàng</span>
+                    <span class="badge badge-danger badge-pill">{{ count((array) session('cart')) }}</span>
+                </h4>
+                <ul class="list-group mb-3">
+                    @php $totalAll = 0 @endphp
+                    @foreach (session('cart') as $id => $details)
+                        @php
+                            $total = $details['price'] * $details['quantity'];
+                            $totalAll += $total;
+                        @endphp
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <input type="hidden" value="{{ $id }}"
+                                    name="product_id[]">{{ $details['name'] ?? '' }}
+                                <br>
+                                <input type="hidden" value="{{ $details['quantity'] }}"
+                                    name="quantity[]">{{ $details['quantity'] ?? '' }}
+                                *
+                                <input type="hidden" value="{{ $total }}" name="total[]">{{ $total }}vnđ
+                            </div>
+                            <span class="text-dark">{{ $details['price'] * $details['quantity'] }} vnđ</span>
+                        </li>
+                        </td>
+                    @endforeach
+                    <li class="list-group-item d-flex justify-content-between">
+                        <h5 style="color:rgb(243, 84, 84)">Tổng thành tiền</h5>
+                        <input type="hidden" name="totalAll" value="{{ $totalAll }}">
+                        <h5 style="color:rgb(243, 84, 84)">{{ session()->get('totalprice') }} vnđ</h5>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-7">
+                <section class="order-form my-4 mx-4">
+
+
+                    <div class="container pt-4">
                         <div class="row">
                             <div class="col-12">
                                 <h2 class="text-center">Điền Thông Tin Gửi Hàng</h2>
@@ -71,7 +106,8 @@
                                     <div class="col-12 mb-2">
                                         @if (isset(auth()->guard('customers')->user()->email))
                                             <input class="order-form-input" name="email"
-                                                value="{{ auth()->guard('customers')->user()->email }}" placeholder="Email">
+                                                value="{{ auth()->guard('customers')->user()->email }}"
+                                                placeholder="Email">
                                         @endif
                                     </div>
                                     <div class="col-12 mb-2">
@@ -89,30 +125,9 @@
                                     </div>
                                 </div>
                             </div>
-                    </form>
-                </div>
-            </section>
-        </div>
-        <div class="col-md-5" id="md-5">
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-dark">Giỏ hàng</span>
-                <span class="badge badge-danger badge-pill">{{ count((array) session('cart')) }}</span>
-            </h4>
-            <ul class="list-group mb-3">
-                @foreach (session('cart') as $id => $details)
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">{{ $details['name'] }}</h6>
-                            <small class="text-dark">{{ $details['price'] }} x {{ $details['quantity'] }}</small>
                         </div>
-                        <span class="text-dark">{{ $details['price'] * $details['quantity'] }} vnđ</span>
-                    </li>
-                @endforeach
-                <li class="list-group-item d-flex justify-content-between">
-                    <h5 style="color:rgb(243, 84, 84)">Tổng thành tiền</h5>
-                    <h5 style="color:rgb(243, 84, 84)">{{ session()->get('totalprice') }} vnđ</h5>
-                </li>
-            </ul>
+                </section>
+            </div>
         </div>
-    </div>
+    </form>
 @endsection

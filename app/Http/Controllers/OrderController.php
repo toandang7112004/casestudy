@@ -27,11 +27,28 @@ class OrderController extends Controller
     {
         $order = new Order;
         $order->customer_id = auth()->guard('customers')->user()->id;
-        $order->total = 0;
+        $order->total = $request->totalAll;
         $order->status = 0;
         $order->date_ship = null;
-        dd($order);
-        // $order->save();
+        $order->save();
+        $count_product = count($request->product_id);
+        for ($i = 0; $i < $count_product; $i++) {
+            $orderItem = new OrderDetail();
+            $orderItem->order_id =  $order->id;
+            $orderItem->product_id = $request->product_id[$i];
+            $orderItem->quantity = $request->quantity[$i];
+            $orderItem->total = $request->total[$i];
+            try {
+                $orderItem->save();
+                session()->forget('cart');
+                toast('Đặt hàng thành công!','success','top-right');
+                return redirect()->route('shop.index');
+            } catch (\exception $e) {
+                Log::error($e->getMessage());
+                toast('Đặt hàng thất bại!','success','top-right');
+                return redirect()->route('shop.index');
+            }
+        }
     }
     public function details($id)
     {
