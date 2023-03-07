@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class Group extends Seeder
+class GroupSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,8 +17,11 @@ class Group extends Seeder
     {
         DB::table('groups')->insert([
             [
-                'name' => 'Supper Admin',
+                'name' => 'Giám đốc',
             ],
+            [
+                'name' => 'thư kí',
+            ]
         ]);
     }
 }

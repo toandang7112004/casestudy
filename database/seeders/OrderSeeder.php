@@ -5,7 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-class CategorySeeder extends Seeder
+
+class OrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +15,13 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
-            'id' => 1,
-            'name' =>'Điện Thoại'
+        DB::table('orders')->insert([
+            [
+                'total' => 500000,
+                'date_ship' => '2022-12-27',
+                'status' => 0,
+                'customer_id' => 1,
+            ],
         ]);
     }
 }

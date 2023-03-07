@@ -15,9 +15,9 @@
                 @foreach($orders as $key => $order)
             <tr>
                 <th colspan="4">{{ ++$key }}</th>
-                <th colspan="4">{{ auth()->user()->name }}</th>
-                <th colspan="4">{{ auth()->user()->address }}</th>
-                <td colspan="4">{{ $order->totalmoney }}</td>
+                <th colspan="4">{{ $order->customer->name }}</th>
+                <th colspan="4">{{ $order->customer->address }}</th>
+                <td colspan="4">{{ $order->total }}</td>
                 <td>
                     <a href="{{ route('order.details',[$order->id]) }}" class="btn btn-danger"> Chi tiết </a>
                 </td>

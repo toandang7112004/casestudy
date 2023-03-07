@@ -5,10 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
-class Group_role extends Seeder
+class Order_DetailSeeder extends Seeder
 {
-    protected $table = 'group_role';
     /**
      * Run the database seeds.
      *
@@ -16,11 +14,14 @@ class Group_role extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 40; $i++) {
-            DB::table('group_role')->insert([
-                'group_id' => 1,
-                'role_id' => $i,
-            ]);
-        }
+        DB::table('order_detail')->insert([
+            [
+                'product_id' => 1,
+                'order_id' => 1,
+                'quantity' => 1,
+                'total' => 450000,
+            ],
+        ]);
+
     }
 }

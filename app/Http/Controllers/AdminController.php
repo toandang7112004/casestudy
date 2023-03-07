@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use  App\Http\Requests\StoreLoginPostRequest;
 use  App\Http\Requests\StoreRegisterPostRequest;
 use  App\Http\Requests\PasswordStorePostRequest;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller

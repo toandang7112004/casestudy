@@ -5,8 +5,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-class CategorySeeder extends Seeder
+
+class Group_roleSeeder extends Seeder
 {
+    protected $table = 'group_role';
     /**
      * Run the database seeds.
      *
@@ -14,9 +16,11 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
-            'id' => 1,
-            'name' =>'Điện Thoại'
-        ]);
+        for ($i = 1; $i <= 40; $i++) {
+            DB::table('group_role')->insert([
+                'group_id' => 1,
+                'role_id' => $i,
+            ]);
+        }
     }
 }

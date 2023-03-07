@@ -14,11 +14,13 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('customers')->insert([
-            'name' =>'oppo',
+        DB::table('customers')->insert(
+            [
+            'id' => 1,
+            'name' =>'A',
             'address' => 'Đông Hà',
-            'email' => '112@gmail.com',
-            'password' => '112'
-        ]);
+            'email' => '1@gmail.com',
+            'password' => '111111'],
+        );
     }
 }
