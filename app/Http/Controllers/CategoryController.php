@@ -91,7 +91,7 @@ class CategoryController extends Controller
     }
     public function deleteforever($id)
     {
-        $this->authorize('deleteforever', CategoryPolicy::class);
+        $this->authorize('deleteforever', Category::class);
         $softs = Category::withTrashed()->find($id);
         try {
             $softs->forceDelete();

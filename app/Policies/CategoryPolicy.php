@@ -32,9 +32,9 @@ class CategoryPolicy
     {
         return $user->hasPermission('Category_restore');
     }
-    public function forceDelete(User $user)
+    public function deleteforever(User $user)
     {
-        return $user->hasPermission('Category_forceDelete');
+        return $user->hasPermission('Category_deleteforever');
     }
 }
 

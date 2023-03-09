@@ -46,6 +46,13 @@
             <div class="text text-danger">{{ $message }}</div>
         @enderror
 
+
+        <div class="mb-3">
+            <label>TRạng thái</label>
+            <input type="checkbox" name="is_visible" value="1" >
+        </div>
+       
+
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href="{{ route('products.index') }}" class="btn btn-primary">Back</a>
     </form>

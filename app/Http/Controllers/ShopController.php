@@ -9,13 +9,16 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreLoginPostRequest;
 use App\Http\Requests\StoreRegisterPostRequest;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ShopController extends Controller
 {
     public function index()
     {
-        $Products = Product::all();
+        $Products = Product::get();
+
         return view('shop.includes.blog', compact('Products'));
     }
     public function show(Request $request, $id)
@@ -51,10 +54,15 @@ class ShopController extends Controller
     }
     public function login(StoreLoginPostRequest $request)
     {
-        if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            toast('Đăng nhập thành công','success','top-right');
-            return redirect()->route('shop.profile');
-        } else {
+        try {
+            if (Auth::guard('customers')->attempt(['email' => $request->email, 'password' => $request->password])) {
+                toast('Đăng nhập thành công','success','top-right');
+                return redirect()->route('shop.profile');
+            }else{
+                return redirect()->route('formloginshop');
+            }
+        } catch (\exception $e) {
+            Log::error($e->getMessage());
             toast('Đăng nhập thất bại','success','top-right');
             return redirect()->route('formloginshop');
         }
@@ -151,5 +159,22 @@ class ShopController extends Controller
     {
         $data = Product::search()->get();
         return $data;
+    }
+    public function comment(Request $request){
+        $comments = new Comment();
+        $comments->content = $request->content;
+        $comments->customer_id = $request->customer_id;
+        $comments->product_id = $request->product_id;
+        // dd($comments);
+        try {
+
+            $comments->save();
+            toast('Bình luận thành công','success','top-right');
+            return redirect()->route('index');
+        } catch (\exception $e) {
+            Log::error($e->getMessage());
+            toast('Bình luận thất bại','error','top-right');
+            return redirect()->route('shop.index');
+        }
     }
 }

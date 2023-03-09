@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\CommentController;
 use App\Models\Category;
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,7 @@ Route::prefix('/')->middleware(['auth', 'prevent-back-history'])->group(function
         Route::get('/deleteforever/{id}', [ProductController::class, 'deleteforever'])->name('products.deleteforever');
         Route::get('/search', [ProductController::class, 'search'])->name('products.search');
         Route::get('/export', [ProductController::class, 'export'])->name('products.export');
+        Route::post('/import', [ProductController::class, 'import'])->name('products.import');
     });
     Route::prefix('groups')->group(function () {
         Route::get('/', [GroupController::class, 'index'])->name('group.index');
@@ -81,6 +83,10 @@ Route::prefix('/')->middleware(['auth', 'prevent-back-history'])->group(function
         Route::put('update/{id}', [UserController::class, 'update'])->name('users.update');
         Route::delete('{id}', [UserController::class, 'delete'])->name('users.destroy');
     });
+    Route::prefix('comments')->group(function () {
+        Route::get('index', [CommentController::class, 'index'])->name('comments.index');
+        Route::get('detail/{id}', [CommentController::class, 'detail'])->name('comments.detail');
+    });
 });
 Route::prefix('shop')->group(function () {
     Route::get('/index', [ShopController::class, 'index'])->name('shop.index');
@@ -91,12 +97,14 @@ Route::prefix('shop')->group(function () {
     Route::get('/login', [ShopController::class, 'formlogin'])->name('formloginshop');
     Route::post('/shoplogin', [ShopController::class, 'login'])->name('shop.login');
     Route::get('/trang_chu', [ShopController::class, 'profile'])->name('shop.profile');
+    Route::post('/comment', [ShopController::class, 'comment'])->name('shop.comment');
 });
 Route::prefix('customer')->group(function () {
     Route::get('/index', [CustomerController::class, 'index'])->name('customers.index');
 });
 Route::prefix('order')->group(function () {
     Route::get('/index', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/show/{id}', [OrderController::class, 'show'])->name('order.show');
     Route::get('/details/{id}', [OrderController::class, 'details'])->name('order.details');
     Route::get('/formorder', [OrderController::class, 'formorder'])->name('formorder');
     Route::post('/savecheckout', [OrderController::class, 'checkout'])->name('savecheckout');

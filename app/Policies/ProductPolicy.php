@@ -44,8 +44,8 @@ class ProductPolicy
         return $user->hasPermission('Product_restore');
     }
 
-    public function forceDelete(User $user)
+    public function deleteforever(User $user)
     {
-        return $user->hasPermission('Product_forceDelete');
+        return $user->hasPermission('Product_deleteforever');
     }
 }

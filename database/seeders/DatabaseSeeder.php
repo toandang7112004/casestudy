@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             Order_DetailSeeder::class,
             UserSeeder::class,
             Group_RoleSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

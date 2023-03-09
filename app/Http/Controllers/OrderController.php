@@ -15,13 +15,23 @@ use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $orders = Order::all();
-        return view( 'admin.order.index',compact('orders') );
+        return view('admin.order.index', compact('orders'));
+    }
+    public function show($id){
+        $orders = Order::find($id);
+        return view('admin.order.details', compact('orders'));
     }
     public function formorder()
     {
-        return view('shop.includes.checkout');
+        if (session('cart')) {
+            return view('shop.includes.checkout');
+        } else {
+            toast('Vui lòng mua hàng trước khi thanh toán', 'dark', 'top-right');
+            return redirect()->route('shop.index');
+        }
     }
     public function checkout(Request $request)
     {
@@ -41,22 +51,22 @@ class OrderController extends Controller
             try {
                 $orderItem->save();
                 session()->forget('cart');
-                toast('Đặt hàng thành công!','success','top-right');
+                toast('Đặt hàng thành công!', 'success', 'top-right');
                 return redirect()->route('shop.index');
             } catch (\exception $e) {
                 Log::error($e->getMessage());
-                toast('Đặt hàng thất bại!','success','top-right');
+                toast('Đặt hàng thất bại!', 'success', 'top-right');
                 return redirect()->route('shop.index');
             }
         }
     }
     public function details($id)
     {
-        $items=DB::table('order_detail')
-        ->join('orders','order_detail.order_id','=','orders.id')
-        ->join('products','order_detail.product_id','=','products.id')
-        ->select('products.*', 'order_detail.*','orders.id')
-        ->where('orders.id','=',$id)->get();
-        return view('admin.order.details',compact('items'));
+        $items = DB::table('order_detail')
+            ->join('orders', 'order_detail.order_id', '=', 'orders.id')
+            ->join('products', 'order_detail.product_id', '=', 'products.id')
+            ->select('products.*', 'order_detail.*', 'orders.id')
+            ->where('orders.id', '=', $id)->get();
+        return view('admin.order.details', compact('items'));
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreProductPostRequest;
+use App\Imports\productImport;
 use Illuminate\Support\Facades\Log;
 use App\Policies\ProductPolicy;
 class Productcontroller extends Controller
@@ -23,7 +24,8 @@ class Productcontroller extends Controller
     public function create(){
         $this->authorize('create', Product::class);
         $categories = Category::all();
-        return view('admin.product.create',compact('categories'));
+        $product = Product::all();
+        return view('admin.product.create',compact('categories','product'));
     }
     //thêm mới
     public function store(StoreProductPostRequest $request){
@@ -32,6 +34,11 @@ class Productcontroller extends Controller
         $products->price = $request->price;
         $products->description = $request->description;
         $products->category_id = $request->category_id;
+        if ($request->has('is_visible')) {
+            $products->is_visible = $request->has('is_visible');
+        }else{
+            $products->is_visible = 0;
+        }
         if ($request->hasFile('image')) {
             $get_image = $request->file('image');
             // dd($get_image);
@@ -63,12 +70,17 @@ class Productcontroller extends Controller
         return view('admin.product.edit',compact('products','categories'));
     }
     //cập nhật
-    public function update(StoreProductPostRequest $request,$id){
+    public function update(Request $request,$id){
         $products = Product::find($id);
         $products->name = $request->name;
         $products->price = $request->price;
         $products->description = $request->description;
         $products->category_id = $request->category_id;
+        if ($request->has('is_visible')) {
+            $products->is_visible = $request->has('is_visible');
+        }else{
+            $products->is_visible = 0;
+        }
         //kiểm tra fil có tồn tại hay không
         if($request->hasFile('image')){
             //lấy file
@@ -149,5 +161,11 @@ class Productcontroller extends Controller
     }
     public function export(){
         return Excel::download(new ProductExport,'products.xlsx');
+    }
+    public function import(Request $request)
+    {
+        Excel::import(new productImport, $request->file('file'));
+        toast('Dữ liệu đã được import thành công!','success','top-right');
+        return redirect()->route('products.index');
     }
 }

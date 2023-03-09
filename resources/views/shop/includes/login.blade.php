@@ -31,15 +31,10 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('admin/assets/css/style.css') }}" rel="stylesheet">
     @include('sweetalert::alert')
-
-
 </head>
-
 <body>
-
     <main>
         <div class="container">
-
             <section
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
@@ -51,16 +46,11 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                                        <h5 class="card-title text-center pb-0 fs-4">Tài khoản của bạn</h5>
                                     </div>
 
                                     <form class="row g-3 needs-validation" method="post" action="{{ route('shop.login') }}">
                                         @csrf
-                                        @if (session('status'))
-                                            <div class="alert alert-success" role="alert">
-                                                {{ session('status') }}
-                                            </div>
-                                        @endif
                                         <div class="col-12">
                                             <label class="form-label">Email</label>
                                             <div class="input-group has-validation">
@@ -69,15 +59,15 @@
                                             </div>
                                         </div>
                                         @error('email')
-                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="text text-danger">{{ $message }}</div>
                                         @enderror
 
                                         <div class="col-12">
-                                            <label class="form-label">Password</label>
+                                            <label >Password</label>
                                             <input type="password" name="password" class="form-control">
                                         </div>
                                         @error('password')
-                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="text text-danger">{{ $message }}</div>
                                         @enderror
 
                                         <div class="col-12">

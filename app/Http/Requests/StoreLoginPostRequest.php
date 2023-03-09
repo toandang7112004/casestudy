@@ -33,7 +33,6 @@ class StoreLoginPostRequest extends FormRequest
         return [
             'email.required' => 'Vui lòng nhập email!',
             'password.required' => 'Vui lòng nhập mật khẩu!'
-            // 'password.min' => 'Mật khẩu quá ngắn!',
         ];
     }
 }

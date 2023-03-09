@@ -17,27 +17,29 @@
                                     <p class="lead fw-bold mb-5" style="text-align: center">Chi Tiết Bình Luận</p>
                                     <div class="row">
                                         <div class="col mb-4">
-                                            <dt>Tên khách hàng : <i>{{ $orders->customer->name }}</i> </dt>
+                                            <dt>Tên sản phẩm: <i>{{ $comments->product_comment->name }}</i> </dt>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col mb-4">
-                                            <dt>Tên khách hàng: <i>{{ $orders->total }} vnđ</i> </dt>
+                                            <dt>Tên khách hàng: <i>{{ $comments->customer->name }}</i> </dt>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col mb-4">
-                                            <dt>Tên sản phẩm đã mua : <i>{{ $orders->product[0]->name }}</i> </dt>
+                                            <dt>Nội dung bình luận </dt>
+                                            <i>{{ $comments->content }}</i>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col mb-4">
-                                            <dt>Tên sản phẩm đã mua : <i>{{ $orders->customer->address }}</i> </dt>
-                                        </div>
+                                    <dt>Ảnh chi tiết</dt>
+                                    <div class="thumbnail_images">
+                                        <ul style="padding-left: 0rem;" id="thumbnail">
+                                            <img class="act" src="{{ asset('public/uploads/' . $comments->product_comment->image) }}" width="100px">
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ route('order.index') }}" class="btn btn-danger">Trở lại</a>
+                            <a href="{{ route('comments.index') }}" class="btn btn-danger">Trở lại</a>
                         </div>
                     </div>
                 </div>

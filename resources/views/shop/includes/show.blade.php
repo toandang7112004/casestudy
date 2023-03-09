@@ -17,7 +17,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/single_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('shop/styles/single_responsive.css') }}">
 </head>
-
+<style>
+    textarea {
+    margin: 0px 0px 0px 233px;
+    }
+    button.btn.btn-info {
+    margin: 0px 0px 0px 420px;
+    }
+</style>
 <body>
 
     <div class="super_container">
@@ -88,16 +95,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-4">
+                    <form action="{{route('shop.comment',$product->id)}}" method="post">
+                        @csrf
+                       
+                        <i></i>
+                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                            <input type="hidden" name="customer_id" value="{{$product->customer[0]->id}}">
+                            <textarea name="content" id="" cols="70" rows="5" placeholder="Nội dung bình luận"></textarea>
+                            <button class="btn btn-info">Gửi Bình Luận</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-        <form action="" method="post">
-            <div class="form-control">
-                <input type="hidden" name="" value="{{ $product->id }}">
-                <textarea name="" id="" cols="185" rows="4" placeholder="Nội dung bình luận"></textarea>
-				<button class="btn btn-info"> Gửi Bình Luận</button>
-            </div>
-        </form>
 
 
     <script src="{{ asset('shop/js/jquery-3.2.1.min.js') }}"></script>

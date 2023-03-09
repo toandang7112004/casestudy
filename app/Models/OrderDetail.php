@@ -9,10 +9,5 @@ class OrderDetail extends Model
 {
     use HasFactory;
     protected $table = 'order_detail';
-    public function category()
-    {
-        return $this->belongsTo(Product::class);
-    }
-
     
 }

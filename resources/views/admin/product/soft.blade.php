@@ -7,7 +7,6 @@
                 <th colspan="4">ID</th>
                 <th colspan="4">Name</th>
                 <th colspan="4">Price</th>
-                <th colspan="4">Category_id</th>
                 <th colspan="4">Action</th>
             </tr>
             </thead>
@@ -17,9 +16,8 @@
                 <th colspan="4">{{ ++$key }}</th>
                 <td colspan="4">{{ $soft->name }}</td>
                 <td colspan="4">{{ $soft->price }}</td>
-                <td colspan="4">{{ $soft->category_id }}</td>
                 <td>
-                    @if (Auth::user()->hasPermission('Product_forceDelete'))
+                    @if (Auth::user()->hasPermission('Product_deleteforever'))
                     <a href="{{route('products.deleteforever',[$soft->id])}}" class="btn btn-danger">Delete forever</a>
                     @endif
                     @if (Auth::user()->hasPermission('Product_restore'))

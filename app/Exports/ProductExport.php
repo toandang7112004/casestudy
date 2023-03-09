@@ -19,9 +19,6 @@ class ProductExport implements FromCollection
             'ID',
             'Name',
             'Price',    
-            "Created",
-            "Updated"
-            
         ];
     }
  
@@ -30,8 +27,6 @@ class ProductExport implements FromCollection
             $user->id,
             $user->name,
             $user->price,
-            $user->created_at,
-            $user->updated_at
         ];
     }
 }

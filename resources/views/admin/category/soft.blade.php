@@ -16,7 +16,7 @@
                     <th colspan="4">{{ ++$key }}</th>
                     <td colspan="4">{{ $soft->name }}</td>
                     <td>
-                        @if (Auth::user()->hasPermission('Category_forceDelete'))
+                        @if (Auth::user()->hasPermission('Category_deleteforever'))
                             <a href="{{ route('categories.deleteforever', [$soft->id]) }}" class="btn btn-secondary">Xóa vĩnh
                                 viễn</a>
                         @endif

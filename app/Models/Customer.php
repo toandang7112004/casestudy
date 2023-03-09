@@ -9,7 +9,8 @@ class Customer extends Authenticatable
 {
     use HasFactory;
     protected $table = 'customers';
-    // public function dskhachhang(){
-
-    // }
+    public function comment()
+    {
+        return $this->hasOne(Comment::class, 'customer_id', 'id');
+    }
 }

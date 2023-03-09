@@ -24,6 +24,11 @@
                           </a>
                       </li>
                       <li>
+                          <a href="{{route('comments.index')}}">
+                              <i class="bi bi-circle"></i><span>Quản Lí Bài Viết</span>
+                          </a>
+                      </li>
+                      <li>
                           <a href="{{ route('order.index') }}">
                               <i class="bi bi-circle"></i><span>Quản Lí Đơn Hàng</span>
                           </a>
