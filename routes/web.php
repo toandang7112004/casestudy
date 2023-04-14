@@ -25,7 +25,7 @@ use App\Models\Category;
 */
 
 
-Route::get('/login', [AdminController::class, 'formlogin'])->name('login');
+Route::get('/', [AdminController::class, 'formlogin'])->name('login');
 Route::post('/adminlogin', [AdminController::class, 'login'])->name('admin.login');
 Route::prefix('/')->middleware(['auth', 'prevent-back-history'])->group(function () {
     Route::get('/home/index', [HomeController::class, 'index'])->name('Home.index');

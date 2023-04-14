@@ -7,6 +7,7 @@
                 <th colspan="4">ID</th>
                 <th colspan="4">Tên</th>
                 <th colspan="4">Tổng tiền</th>
+                <th colspan="4">Ngày mua</th>
                 <th colspan="4">Chi Tiết</th>
             </tr>
             </thead>
@@ -16,6 +17,7 @@
                 <th colspan="4">{{ ++$key }}</th>
                 <th colspan="4">{{ $order->customer->name }}</th>
                 <td colspan="4">{{ $order->total }}</td>
+                <td colspan="4">{{ $order->created_at }}</td>
                 <td>
                     <a href="{{ route('order.show',[$order->id]) }}" class="btn btn-danger"> Chi tiết</a>
                 </td>

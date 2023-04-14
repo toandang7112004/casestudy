@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('view_count');
+            $table->integer('view_count')->nullable();
+            $table->softDeletes()->nullable();
+            $table->string('image');
+            $table->boolean('is_visible')->default(true);
         });
     }
 

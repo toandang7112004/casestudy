@@ -18,7 +18,7 @@ class ProductExport implements FromCollection
         return [
             'ID',
             'Name',
-            'Price',    
+            'Price',
         ];
     }
  
